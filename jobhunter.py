@@ -35,8 +35,13 @@ def add_new_job(cursor, jobdetails):
     # extract all required columns
     description = html2text.html2text(jobdetails['description'])
     date = jobdetails['publication_date'][0:10]
+    Job_id = jobdetails['id']
+    url = jobdetails['url']
+    Title = jobdetails['title']
+    company = jobdetails['company_name']
+
     query = cursor.execute("INSERT INTO jobs( Description, Created_at " ") "
-               "VALUES(%s,%s)", (  description, date))
+               "VALUES(%s,%s,%s,%s,%s,%s)", (  description, date, Job_id, url, Title, company))
      # %s is what is needed for Mysqlconnector as SQLite3 uses ? the Mysqlconnector uses %s
     return query_sql(cursor, query)
 
@@ -44,13 +49,13 @@ def add_new_job(cursor, jobdetails):
 # Check if new job
 def check_if_job_exists(cursor, jobdetails):
     ##Add your code here
-    query = "UPDATE"
+    query = "SELECT * FROM jobs WHERE Job_id = \'%s\'" % id
     return query_sql(cursor, query)
 
 # Deletes job
 def delete_job(cursor, jobdetails):
     ##Add your code here
-    query = "UPDATE"
+    query = "DELETE * FROM jobs WHERE Job_id = \'%s\'" % id
     return query_sql(cursor, query)
 
 
