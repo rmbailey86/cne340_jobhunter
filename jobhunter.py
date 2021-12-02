@@ -40,7 +40,7 @@ def add_new_job(cursor, jobdetails):
     Title = jobdetails['title']
     company = jobdetails['company_name']
 
-    query = cursor.execute("INSERT INTO jobs( Description, Created_at " ") "
+    query = cursor.execute("INSERT INTO jobs( Description, Created_at, Job_id, url, Title, company " ") "
                "VALUES(%s,%s,%s,%s,%s,%s)", (  description, date, Job_id, url, Title, company))
      # %s is what is needed for Mysqlconnector as SQLite3 uses ? the Mysqlconnector uses %s
     return query_sql(cursor, query)
@@ -84,10 +84,13 @@ def add_or_delete_job(jobpage, cursor):
         is_job_found = len(
         cursor.fetchall()) > 0  # https://stackoverflow.com/questions/2511679/python-number-of-rows-affected-by-cursor-executeselect
         if is_job_found:
+            print("Job is found: " + jobdetails["title"] + " from " + jobdetails["company_name"])
 
         else:
             # INSERT JOB
             # Add in your code here to notify the user of a new posting. This code will notify the new user
+            print("New Job is found: " + jobdetails["title"] + " from " + jobdetails["company_name"])
+            add_new_job(cursor, jobdetails)
 
 
 
